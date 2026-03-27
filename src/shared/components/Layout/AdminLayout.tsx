@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Outlet, NavLink, Link } from 'react-router-dom';
+import { useState } from "react";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import {
   Scissors,
   LayoutDashboard,
@@ -9,33 +9,33 @@ import {
   ChevronRight,
   LogOut,
   ClipboardList,
-} from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+} from "lucide-react";
+import { useAuth } from "../../hooks/useAuth";
 
 const navItems = [
   {
-    to: '/admin',
+    to: "/admin",
     end: true,
     icon: LayoutDashboard,
-    label: 'Dashboard',
+    label: "Dashboard",
   },
   {
-    to: '/admin/schedule',
+    to: "/admin/schedule",
     end: false,
     icon: Calendar,
-    label: 'Agenda',
+    label: "Agenda",
   },
   {
-    to: '/admin/appointments',
+    to: "/admin/appointments",
     end: false,
     icon: ClipboardList,
-    label: 'Turnos',
+    label: "Turnos",
   },
   {
-    to: '/admin/customers',
+    to: "/admin/customers",
     end: false,
     icon: Users,
-    label: 'Clientes',
+    label: "Clientes",
   },
 ];
 
@@ -48,8 +48,8 @@ export function AdminLayout() {
       {/* Sidebar */}
       <aside
         className={`${
-          collapsed ? 'w-16' : 'w-60'
-        } flex-shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col transition-all duration-300`}
+          collapsed ? "w-16" : "w-60"
+        } shrink-0 bg-zinc-900 border-r border-zinc-800 flex flex-col transition-all duration-300`}
       >
         {/* Logo */}
         <div className="flex items-center h-16 px-4 border-b border-zinc-800">
@@ -80,12 +80,12 @@ export function AdminLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-amber-500/10 text-amber-500'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
+                    ? "bg-amber-500/10 text-amber-500"
+                    : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
                 }`
               }
             >
-              <Icon className="w-5 h-5 flex-shrink-0" />
+              <Icon className="w-5 h-5 shrink-0" />
               {!collapsed && <span>{label}</span>}
             </NavLink>
           ))}
@@ -105,7 +105,7 @@ export function AdminLayout() {
             onClick={logout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
           >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
+            <LogOut className="w-5 h-5 shrink-0" />
             {!collapsed && <span>Cerrar sesión</span>}
           </button>
           <button
@@ -116,7 +116,7 @@ export function AdminLayout() {
               <ChevronRight className="w-5 h-5 mx-auto" />
             ) : (
               <>
-                <ChevronLeft className="w-5 h-5 flex-shrink-0" />
+                <ChevronLeft className="w-5 h-5 shrink-0" />
                 <span>Colapsar</span>
               </>
             )}
