@@ -98,7 +98,7 @@ export const profilesService = {
           .from('appointments')
           .select('services(price)')
           .eq('appointment_date', today)
-          .in('status', ['confirmed', 'completed']),
+          .eq('status', 'completed'),
       ]);
 
     const revenueToday = (revenueTodayRes.data ?? []).reduce((sum, a) => {
@@ -106,13 +106,13 @@ export const profilesService = {
       return sum + (svc?.price ?? 0);
     }, 0);
 
-    // Reuse week query for revenue (with price join)
+    // Weekly revenue — only completed appointments represent actual income
     const weekRevenueRes = await supabase
       .from('appointments')
       .select('services(price)')
       .gte('appointment_date', weekStart)
       .lte('appointment_date', weekEnd)
-      .in('status', ['confirmed', 'completed']);
+      .eq('status', 'completed');
 
     const revenueWeek = (weekRevenueRes.data ?? []).reduce((sum, a) => {
       const svc = a.services as { price?: number } | null;

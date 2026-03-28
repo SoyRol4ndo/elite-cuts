@@ -126,4 +126,37 @@ export const appointmentsService = {
 
     if (error) throw new Error(error.message);
   },
+
+  /** Permanently deletes an appointment record for the owning customer. */
+  delete: async (id: string, customerId: string): Promise<void> => {
+    const { error } = await supabase
+      .from('appointments')
+      .delete()
+      .eq('id', id)
+      .eq('customer_id', customerId);
+
+    if (error) throw new Error(error.message);
+  },
+
+  /** Returns the total count of appointments with status 'pending' (admin). */
+  getPendingCount: async (): Promise<number> => {
+    const { count, error } = await supabase
+      .from('appointments')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending');
+
+    if (error) throw new Error(error.message);
+    return count ?? 0;
+  },
+
+  /** Permanently deletes multiple appointment records for the owning customer. */
+  deleteMany: async (ids: string[], customerId: string): Promise<void> => {
+    const { error } = await supabase
+      .from('appointments')
+      .delete()
+      .in('id', ids)
+      .eq('customer_id', customerId);
+
+    if (error) throw new Error(error.message);
+  },
 };

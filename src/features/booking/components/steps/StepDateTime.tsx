@@ -70,7 +70,7 @@ export function StepDateTime({
       {selectedDate && (
         <div>
           <p className="text-sm font-medium text-zinc-300 mb-3">
-            Horarios disponibles –{" "}
+            Horarios –{" "}
             {format(selectedDate, "EEEE d 'de' MMMM", { locale: es })}
           </p>
           {isLoadingSlots ? (
@@ -83,9 +83,8 @@ export function StepDateTime({
             </p>
           ) : (
             <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-              {slots
-                ?.filter((s) => s.available)
-                .map((slot) => (
+              {slots?.map((slot) =>
+                slot.available ? (
                   <button
                     key={slot.time}
                     onClick={() => onSelectTime(slot.time)}
@@ -97,7 +96,17 @@ export function StepDateTime({
                   >
                     {slot.time}
                   </button>
-                ))}
+                ) : (
+                  <div
+                    key={slot.time}
+                    title="Horario ocupado"
+                    className="py-2.5 rounded-lg text-xs font-medium border border-zinc-800/50 bg-zinc-900/30 text-zinc-600 cursor-not-allowed flex flex-col items-center gap-0.5"
+                  >
+                    <span>{slot.time}</span>
+                    <span className="text-[10px] text-zinc-700">Ocupado</span>
+                  </div>
+                )
+              )}
             </div>
           )}
         </div>

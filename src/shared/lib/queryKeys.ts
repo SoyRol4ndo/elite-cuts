@@ -27,6 +27,8 @@ export const queryKeys = {
     // Available time slots for booking
     slots: (barberId: string, date: string, duration: number) =>
       ['appointments', 'slots', barberId, date, duration] as const,
+    // Count of appointments pending admin action
+    pendingCount: () => ['appointments', 'pending', 'count'] as const,
   },
 
   profiles: {

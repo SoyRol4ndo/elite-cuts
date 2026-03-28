@@ -1,33 +1,60 @@
-import { useState } from 'react';
-import { format, parseISO } from 'date-fns';
-import { es } from 'date-fns/locale';
-import { Search, Filter, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
-import { useAllAppointments } from '../hooks/useAllAppointments';
-import { useUpdateAppointmentStatus } from '../hooks/useUpdateAppointmentStatus';
-import { LoadingSpinner } from '../../../shared/components/LoadingSpinner';
-import type { AppointmentStatus } from '../../../shared/types';
+import { useState } from "react";
+import { format, parseISO } from "date-fns";
+import { es } from "date-fns/locale";
+import {
+  Search,
+  Filter,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+} from "lucide-react";
+import { useAllAppointments } from "../hooks/useAllAppointments";
+import { useUpdateAppointmentStatus } from "../hooks/useUpdateAppointmentStatus";
+import { LoadingSpinner } from "../../../shared/components/LoadingSpinner";
+import type { AppointmentStatus } from "../../../shared/types";
 
-const ALL_STATUSES: { value: AppointmentStatus | 'all'; label: string }[] = [
-  { value: 'all', label: 'Todos' },
-  { value: 'pending', label: 'Pendientes' },
-  { value: 'confirmed', label: 'Confirmados' },
-  { value: 'completed', label: 'Completados' },
-  { value: 'cancelled', label: 'Cancelados' },
+const ALL_STATUSES: { value: AppointmentStatus | "all"; label: string }[] = [
+  { value: "all", label: "Todos" },
+  { value: "pending", label: "Pendientes" },
+  { value: "confirmed", label: "Confirmados" },
+  { value: "completed", label: "Completados" },
+  { value: "cancelled", label: "Cancelados" },
 ];
 
-const STATUS_CONFIG: Record<AppointmentStatus, { label: string; className: string; icon: React.ElementType }> = {
-  pending: { label: 'Pendiente', className: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20', icon: AlertCircle },
-  confirmed: { label: 'Confirmado', className: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', icon: CheckCircle2 },
-  cancelled: { label: 'Cancelado', className: 'bg-red-500/10 text-red-400 border-red-500/20', icon: XCircle },
-  completed: { label: 'Completado', className: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20', icon: CheckCircle2 },
+const STATUS_CONFIG: Record<
+  AppointmentStatus,
+  { label: string; className: string; icon: React.ElementType }
+> = {
+  pending: {
+    label: "Pendiente",
+    className: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+    icon: AlertCircle,
+  },
+  confirmed: {
+    label: "Confirmado",
+    className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    icon: CheckCircle2,
+  },
+  cancelled: {
+    label: "Cancelado",
+    className: "bg-red-500/10 text-red-400 border-red-500/20",
+    icon: XCircle,
+  },
+  completed: {
+    label: "Completado",
+    className: "bg-zinc-500/10 text-zinc-400 border-zinc-500/20",
+    icon: CheckCircle2,
+  },
 };
 
 export function AppointmentsPage() {
-  const [statusFilter, setStatusFilter] = useState<AppointmentStatus | 'all'>('all');
-  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">(
+    "all",
+  );
+  const [search, setSearch] = useState("");
 
   const { data: appointments, isLoading } = useAllAppointments(
-    statusFilter === 'all' ? undefined : statusFilter
+    statusFilter === "all" ? undefined : statusFilter,
   );
   const updateMutation = useUpdateAppointmentStatus();
 
@@ -71,8 +98,8 @@ export function AppointmentsPage() {
               onClick={() => setStatusFilter(s.value)}
               className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
                 statusFilter === s.value
-                  ? 'bg-amber-500 text-zinc-950'
-                  : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-100'
+                  ? "bg-amber-500 text-zinc-950"
+                  : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-100"
               }`}
             >
               {s.label}
@@ -92,15 +119,27 @@ export function AppointmentsPage() {
         </div>
       ) : (
         <div className="overflow-x-auto rounded-2xl border border-zinc-800">
-          <table className="w-full text-sm min-w-[700px]">
+          <table className="w-full text-sm min-w-175">
             <thead>
               <tr className="border-b border-zinc-800 bg-zinc-900/80">
-                <th className="text-left p-4 text-zinc-400 font-medium">Cliente</th>
-                <th className="text-left p-4 text-zinc-400 font-medium">Barbero</th>
-                <th className="text-left p-4 text-zinc-400 font-medium">Servicio</th>
-                <th className="text-left p-4 text-zinc-400 font-medium">Fecha & Hora</th>
-                <th className="text-left p-4 text-zinc-400 font-medium">Estado</th>
-                <th className="text-left p-4 text-zinc-400 font-medium">Acciones</th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Cliente
+                </th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Barbero
+                </th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Servicio
+                </th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Fecha & Hora
+                </th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Estado
+                </th>
+                <th className="text-left p-4 text-zinc-400 font-medium">
+                  Acciones
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-800/50">
@@ -113,53 +152,80 @@ export function AppointmentsPage() {
                     className="hover:bg-zinc-900/50 transition-colors"
                   >
                     <td className="p-4">
-                      <p className="font-medium">{apt.profiles?.full_name ?? '—'}</p>
+                      <p className="font-medium">
+                        {apt.profiles?.full_name ?? "—"}
+                      </p>
                       {apt.profiles?.phone && (
-                        <p className="text-xs text-zinc-500">{apt.profiles.phone}</p>
+                        <p className="text-xs text-zinc-500">
+                          {apt.profiles.phone}
+                        </p>
                       )}
                     </td>
-                    <td className="p-4 text-zinc-300">{apt.barbers?.name ?? '—'}</td>
+                    <td className="p-4 text-zinc-300">
+                      {apt.barbers?.name ?? "—"}
+                    </td>
                     <td className="p-4">
-                      <p className="text-zinc-300">{apt.services?.label ?? '—'}</p>
+                      <p className="text-zinc-300">
+                        {apt.services?.label ?? "—"}
+                      </p>
                       <p className="text-xs text-zinc-500">
                         ${apt.services?.price?.toLocaleString()}
                       </p>
                     </td>
                     <td className="p-4">
                       <p className="text-zinc-300">
-                        {format(parseISO(apt.appointment_date), "d MMM yyyy", { locale: es })}
+                        {format(parseISO(apt.appointment_date), "d MMM yyyy", {
+                          locale: es,
+                        })}
                       </p>
                       <p className="text-xs text-zinc-500">
                         {apt.start_time} – {apt.end_time}
                       </p>
                     </td>
                     <td className="p-4">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${statusConf.className}`}>
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${statusConf.className}`}
+                      >
                         <StatusIcon className="w-3 h-3" />
                         {statusConf.label}
                       </span>
                     </td>
                     <td className="p-4">
                       <div className="flex gap-2">
-                        {apt.status === 'pending' && (
+                        {apt.status === "pending" && (
                           <>
                             <button
-                              onClick={() => updateMutation.mutate({ id: apt.id, status: 'confirmed' })}
+                              onClick={() =>
+                                updateMutation.mutate({
+                                  id: apt.id,
+                                  status: "confirmed",
+                                })
+                              }
                               className="px-2.5 py-1 text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 rounded-lg transition-colors"
                             >
                               Confirmar
                             </button>
                             <button
-                              onClick={() => updateMutation.mutate({ id: apt.id, status: 'cancelled' })}
+                              onClick={() =>
+                                updateMutation.mutate({
+                                  id: apt.id,
+                                  status: "cancelled",
+                                })
+                              }
                               className="px-2.5 py-1 text-xs bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
                             >
                               Cancelar
                             </button>
                           </>
                         )}
-                        {apt.status === 'confirmed' && (
+                        {apt.status === "confirmed" && (
                           <button
-                            onClick={() => updateMutation.mutate({ id: apt.id, status: 'completed' })}
+                            onClick={() =>
+                              updateMutation.mutate({
+                                id: apt.id,
+                                status: "completed",
+                              })
+                            }
                             className="px-2.5 py-1 text-xs bg-zinc-500/10 text-zinc-400 hover:bg-zinc-500/20 rounded-lg transition-colors"
                           >
                             Completar
