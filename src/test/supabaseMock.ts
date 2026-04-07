@@ -39,8 +39,9 @@ export function createQueryChain(result: {
 /**
  * Sets up `supabase.from()` to return a chainable mock with the given result.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mockFrom(
-  supabase: { from: ReturnType<typeof vi.fn> },
+  supabase: { from: (...args: any[]) => any },
   result: {
     data?: unknown;
     error?: { message: string; code?: string } | null;
