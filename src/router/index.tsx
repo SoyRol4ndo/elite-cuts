@@ -18,7 +18,6 @@ import {
 } from "./lazyPages";
 
 export const router = createBrowserRouter([
-  // ── Public routes ────────────────────────────────────────────────────────
   {
     element: <PublicLayout />,
     children: [
@@ -47,7 +46,6 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // ── Customer protected routes ──────────────────────────────────────
       {
         element: <ProtectedRoute />,
         children: [
@@ -72,7 +70,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // ── Admin protected routes ───────────────────────────────────────────────
   {
     element: <ProtectedRoute allowedRole="admin" redirectTo="/login" />,
     children: [

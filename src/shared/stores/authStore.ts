@@ -33,5 +33,5 @@ export const useAuthStore = create<AuthState>((set) => ({
   setProfile: (profile) => set({ profile }),
   setLoading: (isLoading) => set({ isLoading }),
   setInitialized: (isInitialized) => set({ isInitialized }),
-  reset: () => set(initialState),
+  reset: () => set({ ...initialState, isLoading: false, isInitialized: true }),
 }));

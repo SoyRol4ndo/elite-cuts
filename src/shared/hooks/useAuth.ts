@@ -34,7 +34,7 @@ export function useAuth() {
     async ({ full_name, email, phone, password }: RegisterFormData) => {
       setLoading(true);
       try {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -42,6 +42,10 @@ export function useAuth() {
           },
         });
         if (error) throw error;
+
+        // Return whether the user was auto-confirmed (has a session)
+        // vs needs email confirmation (no session)
+        return { needsEmailConfirmation: !data.session };
       } finally {
         setLoading(false);
       }

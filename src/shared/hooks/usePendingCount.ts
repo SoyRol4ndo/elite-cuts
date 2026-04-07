@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { appointmentsService } from '../../services/appointments.service';
+import { appointmentsService } from '../services/appointments.service';
 import { queryKeys } from '../lib/queryKeys';
 
 /**

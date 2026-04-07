@@ -12,7 +12,11 @@ dist
 dist-ssr
 *.local
 
-.env*
+.claude
+.env
+
+/coverage
+localhost_*
 
 # Editor directories and files
 .vscode/*

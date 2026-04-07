@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { catalogService } from '../../services/catalog.service';
+import { catalogService } from '../services/catalog.service';
 import { queryKeys } from '../lib/queryKeys';
 import type { Service } from '../types';
 
